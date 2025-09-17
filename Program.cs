@@ -1,5 +1,6 @@
 ﻿using System.Collections.Specialized;
 using System.Diagnostics.CodeAnalysis;
+using System.Reflection.Metadata;
 
 namespace Console_Blank_6
 {
@@ -25,10 +26,22 @@ namespace Console_Blank_6
                 Console.WriteLine($"Add a value at poisition: {i + 1}");
                 integers[i] = Convert.ToInt32(Console.ReadLine());
             }
+            Bubble_sort(integers);
+
+            //
+            /*Console.WriteLine("What would you like the size of the array to be? ");
+            int size = Convert.ToInt32(Console.ReadLine());
+            int[] integers = new int[size];
+            for (int i = 0; i < integers.Length; i++)
+            {
+                Console.WriteLine($"Add a value at poisition: {i + 1}");
+                integers[i] = Convert.ToInt32(Console.ReadLine());
+            }
             
             Console.WriteLine("What number would you like to look for");
             int finding = Convert.ToInt32(Console.ReadLine());
-            SearchingNumber(integers, finding);
+            BinarySearch(integers, finding); */
+
         }
         static void PrintElements(string[] data) // Subroutine for task 1
         {
@@ -58,7 +71,7 @@ namespace Console_Blank_6
             }
             return Prime;
         }
-        public static void SearchingNumber(int[] integers, int finding) // normal searching algorithm for task 4.
+        public static void SearchingNumber(int[] integers, int finding) // normal searching algorithm for task 5.
         {
             bool found = false;
             for (int i = 0;i < integers.Length; i++)
@@ -74,14 +87,56 @@ namespace Console_Blank_6
                 Console.WriteLine($"Number was at position -1, ie. not found.");
             }
         }
-        public static void BinarySearch(int[] integers, int finding)
+        public static int BinarySearch(int[] integers, int finding) //binary search program. (Task 5).
         {
-            int position;
-            bool found = false;
-            while (false)
+            int beginning = 0;
+            int ending = integers.Length-1;
+            while (beginning <= ending)
             {
-                position = 
+                int current_position = (beginning + ending) / 2;
+                if (integers[current_position] == finding)
+                {
+                    Console.WriteLine($"Number found in position {current_position + 1}");
+                    return integers[current_position];
+                }
+                else if (integers[current_position] > finding)
+                {
+                    ending = current_position-1;
+                }
+                else if (integers[current_position] < finding)
+                {
+                    beginning = current_position+1;
+                }
+
             }
-           
+            Console.WriteLine("Number not found.");
+            return -1;
+        }
+        public static void Bubble_sort(int[] integers) // task 4 done, albeit could be neater
+        {
+            int differences = 1;
+            while (differences != 0)
+            {
+                differences = 0;
+                for (int i = 0; i < integers.Length - 1; i++)
+                {
+                    int alter_index = i + 1;
+                    if (integers[i] > integers[alter_index])
+                    {
+                        int temp = integers[i];
+                        integers[i] = integers[alter_index];
+                        integers[alter_index] = temp;
+                        differences++;
+                    }
+                }
+            }
+            for (int i = 0; i < integers.Length; i++)
+            {
+                Console.WriteLine(integers[i]);
+            }
+        }
+
+
+
     }
 }
